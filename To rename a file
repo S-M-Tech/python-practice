@@ -1,0 +1,6 @@
+import os
+old = "1.txt"
+new = "pythonrename.pdf"
+
+os.rename(old,new)
+
