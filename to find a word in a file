@@ -1,0 +1,41 @@
+from colorama import init, Fore, Back, Style
+import time
+import sys
+
+def progress_bar(total=20, delay=0.1):
+    for i in range(total + 1):
+        percent = int((i / total) * 100)
+        bar = '#' * i + '-' * (total - i)
+        sys.stdout.write(f'\r[{bar}] {percent}%')
+        sys.stdout.flush()
+        time.sleep(delay)
+
+def type_text(text,color=Fore.GREEN,delay=0.05):
+    for char in text:
+        print(color+char,end='',flush=True)
+        time.sleep(delay)
+    print()
+
+def type_text3(text,color=Fore.RED,delay=0.05):
+    for char in text:
+        print(color+char,end='',flush=True)
+        time.sleep(delay)
+    print()
+
+def type_text4(text,color=Fore.CYAN,delay=0.02):
+    for char in text:
+        print(color+char,end='',flush=True)
+        time.sleep(delay)
+    print()
+
+
+progress_bar(30, 0.05)
+with open("example.txt","r") as file:
+    c = file.read()
+a = input(Fore.CYAN+"\nEnter word to find: ").strip().lower()
+
+b = str(a)
+if b in c:
+    type_text("The word is present")
+else:
+    type_text3("Not present")
