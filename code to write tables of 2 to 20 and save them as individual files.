@@ -1,0 +1,10 @@
+a = input("Do you want to print the tables of 2 to 20, and save them as individual files? Y/N: ").strip().capitalize()
+if a == "Y":
+  for b in range(2,5):
+     with open(f"table of_{b}","w") as file:
+        for i in range(0,11):
+         file.write(f"\n{b} X {i} = {b*i}\n")
+  print("All tables saved successfully.")
+else:
+    print("Operation cancelled.")
+    
