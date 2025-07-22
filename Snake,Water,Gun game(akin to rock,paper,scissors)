@@ -1,0 +1,156 @@
+import random
+from colorama import init, Fore, Back, Style
+import time
+import sys
+
+
+
+
+init(autoreset=True)
+
+def type_text(text,color=Fore.GREEN,delay=0.05):
+    for char in text:
+        print(color+char,end='',flush=True)
+        time.sleep(delay)
+    print()
+
+def type_text2(text,color=Fore.YELLOW,delay=0.05):
+    for char in text:
+        print(color+char,end='',flush=True)
+        time.sleep(delay)
+    print()
+
+def type_text3(text,color=Fore.RED,delay=0.05):
+    for char in text:
+        print(color+char,end='',flush=True)
+        time.sleep(delay)
+    print()
+
+def type_text4(text,color=Fore.CYAN,delay=0.02):
+    for char in text:
+        print(color+char,end='',flush=True)
+        time.sleep(delay)
+    print()
+
+def progress_bar(total=20, delay=0.1):
+    for i in range(total + 1):
+        percent = int((i / total) * 100)
+        bar = '#' * i + '-' * (total - i)
+        sys.stdout.write(f'\r[{bar}] {percent}%')
+        sys.stdout.flush()
+        time.sleep(delay)
+    
+dayum = {"S":"Snake",
+        "W":"Water",
+        "G":"Gun"}
+
+score_comp=0
+score_user=0
+def engine():
+            
+            global score_user,score_comp
+            options = ["S","W","G","S","W","G"]
+            comp = random.choice(options)
+            human = input(Fore.BLUE + f"\n{i}.Enter S/w/G:").capitalize()
+            if human not in ["S","W","G"]:
+                type_text3("Invalid Input,Try again:")
+                return engine()
+            
+            print(Fore.BLUE+"\nComputer:",Fore.BLUE +dayum[comp],Fore.BLUE +"\nUser:",Fore.BLUE+dayum[human])
+            
+            if human=="S" and comp=="W":
+                type_text2("\nSnake drinks Water,User wins the round.")
+                score_user+=1
+            elif human=="W" and comp=="S":
+                type_text2("\nSnake drinks Water,Computer wins the round.")
+                score_comp+=1
+            elif human=="W" and comp=="G":
+                type_text2("\nWater douses Gun,User wins the round.")
+                score_user+=1
+            elif human=="G" and comp=="W":
+                type_text2("\nWater douses Gun,Computer wins the round.")
+                score_comp+=1
+            elif human=="G" and comp=="S":
+                type_text2("\nGun killed the Snake,User wins the round.")
+                score_user+=1
+            elif human=="S" and comp=="G":
+                type_text2("\nGun killed the Snake,Computer wins the round.")
+                score_comp+=1
+            else: 
+                type_text2("\nIt's a Tie.")
+                tiebreak = input(Fore.YELLOW+"Do you want a tie breaker?Y/N: ").capitalize()
+                if tiebreak == "Y":
+                    engine()
+                else:
+                    return 
+
+progress_bar(30, 0.05)
+
+type_text("\nInitialising Snake Water Gun.")
+type_text("Welcome to Snake,Water,Gun.")
+a = input(Fore.CYAN+"Ready to begin? Y/N: ").capitalize()
+if a == "Y": 
+    
+    type_text4("Let's Begin,Here's a short guide on how to play:\nThis is the dictionary,just enter the corresponding letter to your option \nto play againt the computer.")
+    for key,value in dayum.items():
+        c = f"{key},{value}"
+        print(Fore.RED+c)
+    rounds = input(Fore.CYAN+"Enter number of rounds: ")
+    print("The one who wins the most rounds wins,There are total of",rounds,Fore.CYAN+"round")
+    
+    r = int(rounds)
+    for i in range(1,(r+1)):
+        progress_bar(30, 0.0)
+        engine()
+
+    type_text3("Game Over!")
+    if score_comp<score_user:
+        progress_bar(20, 0.05)
+        print("\nThe final score is:","\n\tUser:",score_user,"\n\tComputer:",score_comp)
+        progress_bar(10, 0.02)
+        type_text("Congratulations! the user has won!")
+    elif score_comp==score_user:
+        progress_bar(20, 0.05)
+        print("\nThe final score is:","\n\tUser:",score_user,"\n\tComputer:",score_comp)
+        progress_bar(10, 0.02)
+        type_text2("\nIt's a tie")
+    else:
+        progress_bar(20, 0.05)
+        print("\nThe final score is:","\n\tUser:",score_user,"\n\tComputer:",score_comp)
+        progress_bar(10, 0.02)
+        type_text3("The User lost the game.")
+    scoreans = input("Do you want to save the score? Y/N: ").strip().capitalize()
+    sc = str(score_comp)
+    su = str(score_user)
+    if scoreans == "Y":
+        progress_bar(20, 0.05)
+        with open("score.txt","a") as file:
+                file.write("\n\nScore Log.")
+                file.write("\n1)Computer:")
+                file.write(sc)
+                file.write("\n2)User:")
+                file.write(su)
+                if score_comp<score_user:
+                    file.write("\nResult:The user won the round")
+                    file.write("\nTotal number of rounds:")
+                    file.write(rounds)
+                elif score_comp==score_user:
+                    file.write("\nResult:It's a tie.")
+                    file.write("\nTotal number of rounds:")
+                    file.write(rounds)
+                else:
+                    file.write("\nResult:The computer won the round.")
+                    file.write("\nTotal number of rounds:")
+                    file.write(rounds)
+        type_text("\nSaved.")
+    elif scoreans not in ["Y","N"]:
+        type_text3("Haha...Why?...Can't you read?")
+   
+    else:
+        type_text("Thanks for playing!")
+
+elif a not in ["Y","N"]:
+    type_text("Why u do this to me?")
+
+else:
+    type_text("Let's play later.Bye!")
